@@ -2,8 +2,10 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - Enemy
+  - Collectible
   layers:
   - Default
   - TransparentFX
@@ -11,7 +13,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - WallLayer
   - 
   - 
   - 
@@ -41,3 +43,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3589434483
+    locked: 0
+  - name: Player
+    uniqueID: 1054352081
+    locked: 0
+  - name: Enemies
+    uniqueID: 2007310159
+    locked: 0
+  - name: Collectibles
+    uniqueID: 3464376213
+    locked: 0
+  - name: SpawnArea
+    uniqueID: 3891663647
+    locked: 0
+  m_RenderingLayers:
+  - Default
