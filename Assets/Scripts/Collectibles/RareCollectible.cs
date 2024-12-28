@@ -2,74 +2,65 @@ using UnityEngine;
 
 public class RareCollectible : MonoBehaviour, ICollectibleBehavior, IScoringCollectible
 {
+    private int scoreValue = Constants.RareCollectiblePoints;
 
-    private int scoreValue = Constants.RareCollectiblePoints; // Points for collecting
+    [Header("Pulsating Settings")]
+    [SerializeField] private float visibleDuration = 10f; // Total time the collectible stays visible
+    [SerializeField] private float pulseDuration = 5f; // Time to start pulsating
+    [SerializeField] private float minScale = 0.8f; // Minimum scale for pulsating
+    [SerializeField] private float maxScale = 1.2f; // Maximum scale for pulsating
+    [SerializeField] private float pulseSpeed = 2f; // Speed of pulsation
 
-    [Header("Visibility Settings")]
-    [SerializeField] private float visibleDuration = 5f; // Time the collectible stays visible
-    [SerializeField] private float tickInterval = 1f; // Interval for ticking before disappearing
+    private const float SinWaveMin = -1f; // Minimum value of Mathf.Sin()
+    private const float SinWaveMax = 1f;  // Maximum value of Mathf.Sin()
+    private const float NormalizedMin = 0f; // Normalized range minimum
+    private const float NormalizedMax = 1f; // Normalized range maximum
 
-    private float remainingTime; // Time left before disappearing
-    private SpriteRenderer spriteRenderer; // Reference to the sprite renderer
+    private float elapsedTime;
 
     void Start()
     {
-        // Initialize the remaining time
-        remainingTime = visibleDuration;
-
-        // Cache the sprite renderer to toggle visibility
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null)
-        {
-            Debug.LogWarning($"{gameObject.name} is missing a SpriteRenderer component.");
-        }
-
-        // Start ticking effect before disappearing
-        InvokeRepeating(nameof(TickEffect), visibleDuration - 3f, tickInterval);
-
-        // Schedule destruction after the duration
+        // Schedule destruction
         Destroy(gameObject, visibleDuration);
     }
 
-    public void PerformBehavior()
+    void Update()
     {
-        TickEffect();
+        elapsedTime += Time.deltaTime;
+
+        // Start pulsating effect during the last few seconds of the collectible's lifespan
+        if (elapsedTime >= visibleDuration - pulseDuration)
+        {
+            ApplyPulsatingEffect();
+        }
+    }
+
+    private void ApplyPulsatingEffect()
+    {
+        float sinWave = Mathf.Sin(Time.time * pulseSpeed); // Oscillates between SinWaveMin and SinWaveMax
+        float normalizedSinWave = Mathf.InverseLerp(SinWaveMin, SinWaveMax, sinWave); // Normalized to 0–1
+        float scale = Mathf.Lerp(minScale, maxScale, normalizedSinWave); // Map normalized value to scale range
+        transform.localScale = new Vector3(scale, scale, scale);
     }
 
     public int GetScoreValue()
     {
-        Debug.Log($"RareCollectible Score Value: {scoreValue}");
         return scoreValue;
     }
 
-
-    private void TickEffect()
-    {
-        // Toggle visibility to simulate ticking
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.enabled = !spriteRenderer.enabled;
-        }
-    }
-
-    private bool isCollected = false;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isCollected) return; // Prevent double-triggering
         if (collision.CompareTag("Player"))
         {
-            isCollected = true;
-            Debug.Log("Rare collectible picked up!");
-            CancelInvoke(nameof(TickEffect));
             Destroy(gameObject);
         }
     }
 
-
-    private void OnDestroy()
+    // Required method from ICollectibleBehavior
+    public void PerformBehavior()
     {
-        // Ensure ticking is canceled to avoid invoking on a destroyed object
-        CancelInvoke(nameof(TickEffect));
+        // Define any custom behavior here, for example:
+        Debug.Log("Rare collectible is performing its behavior!");
+        ApplyPulsatingEffect();
     }
 }

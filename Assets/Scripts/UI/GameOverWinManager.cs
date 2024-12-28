@@ -45,11 +45,4 @@ public class GameOverWinManager : MonoBehaviour
         // Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
-    // Quits the application (useful for builds)
-    public void QuitGame()
-    {
-        Debug.Log("Quit Game called!"); // Log for testing in the editor
-        Application.Quit(); // Quits the application (doesn't work in editor)
-    }
 }

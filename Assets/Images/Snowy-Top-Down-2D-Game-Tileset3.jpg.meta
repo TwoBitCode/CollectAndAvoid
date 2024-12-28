@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Snowy-Top-Down-2D-Game-Tileset3_0: 5774496094568455364
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

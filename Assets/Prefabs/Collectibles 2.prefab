@@ -178,5 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5cba19fe3d55404da2b5f696777f835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visibleDuration: 5
-  tickInterval: 1
+  visibleDuration: 10
+  pulseDuration: 5
+  minScale: 0.1
+  maxScale: 0.5
+  pulseSpeed: 2

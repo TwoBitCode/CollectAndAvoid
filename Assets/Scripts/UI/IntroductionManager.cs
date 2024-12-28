@@ -10,10 +10,9 @@ public class IntroductionManager : MonoBehaviour
     [SerializeField] private Button startButton; // Button to start the game
 
     [Header("Game Settings")]
-    [SerializeField]
     private string introductionMessage =
         $"Welcome to the Game!\n\n" +
-        $"You have {Constants.MaxLives} lives. Collect {Constants.MaxScore} donuts to win and avoid enemies!\n" +
+        $"You have {Constants.MaxLives} lives. Collect {Constants.MaxScore} points to win and avoid enemies!\n" +
         "There are two types of donuts:\n" +
         $"- Common: Worth {Constants.CommonCollectiblePoints} points.\n" +
         $"- Rare: Worth {Constants.RareCollectiblePoints} points.\n\n" +
