@@ -103,20 +103,28 @@ You can play the game directly from our [Itch.io page](https://twobitcode.itch.i
 graph TD
     GameManager -->|Manages| ScoreLivesManager
     GameManager -->|Manages| GameOverWinManager
+    GameManager -->|Coordinates| IntroductionManager
     PlayerController -->|Interacts| GameManager
     PlayerController -->|Detects| ICollectibleBehavior
     PlayerController -->|Detects| IScoringCollectible
+    SpawnManager -->|Spawns| EnemyController
     SpawnManager -->|Spawns| EnemyPatrol
     SpawnManager -->|Spawns| EnemyChase
-    SpawnManager -->|Spawns| RareCollectible
-    SpawnManager -->|Spawns| TimedCollectible
-    SpawnManager -->|Spawns| MovingCollectible
+    EnemyController -->|Executes| IEnemyBehavior
+    EnemyPatrol -->|Implements| IEnemyBehavior
+    EnemyChase -->|Implements| IEnemyBehavior
     RareCollectible -->|Implements| ICollectibleBehavior
     RareCollectible -->|Implements| IScoringCollectible
+    RareCollectible -->|Uses| Constants
     TimedCollectible -->|Implements| ICollectibleBehavior
+    TimedCollectible -->|Uses| Constants
     MovingCollectible -->|Implements| ICollectibleBehavior
-    EnemyPatrol -->|Patrols| PlayerController
-    EnemyChase -->|Chases| PlayerController
+    GameOverActions -->|Manages| SceneManager
+    IntroductionManager -->|Pauses| Time
+    IntroductionManager -->|Uses| Constants
+    SpawnManager -->|Uses| Constants
+    Constants -->|Defines Values For| GameManager
+    Constants -->|Defines Values For| Collectibles
 ```
 
 ### 🛠️ Basic Architecture Diagram
@@ -126,10 +134,16 @@ graph TD
     GameManager -->|Updates| UI[UI Managers]
     UI -->|Displays| ScoreLivesManager
     UI -->|Displays| GameOverWinManager
+    UI -->|Displays| IntroductionManager
+    IntroductionManager -->|Pauses| Time
+    GameOverActions -->|Manages| SceneManager
     Player -->|Interacts| Collectibles
     Player -->|Avoids| Enemies
     Collectibles -->|Spawned By| SpawnManager
     Enemies -->|Spawned By| SpawnManager
+    EnemyController -->|Executes| IEnemyBehavior
+    Constants -->|Defines Values For| All[Game Elements]
+
 ```
 
 ---
