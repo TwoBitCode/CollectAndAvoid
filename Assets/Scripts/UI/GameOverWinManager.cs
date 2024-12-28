@@ -6,9 +6,7 @@ public class GameOverWinManager : MonoBehaviour
     [Header("UI Panels")]
     [SerializeField] private GameObject gameOverPanel; // Reference to the Game Over UI panel
     [SerializeField] private GameObject gameWinPanel; // Reference to the Win UI panel
-
-    [Header("Game Settings")]
-    [SerializeField] private float defaultTimeScale = 1f; // Default time scale for resuming the game
+     private float defaultTimeScale = Constants.GameRunningTimeScale; // Default time scale for resuming the game
 
     // Displays the Game Over screen
     public void ShowGameOverScreen()
