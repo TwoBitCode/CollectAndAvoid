@@ -42,7 +42,9 @@ This repository contains the source code for a fun 2D collectible game built wit
 ### 🍩 Collectible Classes
 
 - **`RareCollectible`**:
-  - Provides bonus points to the player and features a ticking visual effect before disappearing.
+  - Provides bonus points to the player.
+  - Features a **pulsating visual effect**, dynamically growing and shrinking during the last moments before disappearing.
+  - The pulsating effect emphasizes urgency, encouraging the player to collect it quickly.
 
 - **`TimedCollectible`**:
   - Moves in a circular motion and disappears after a set lifetime.
