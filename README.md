@@ -1,6 +1,9 @@
-# Collect And Evoid- Escape the Grinches and Collect Hanukkah Donuts! 🎮🍩
+# Collect And Evoid- Escape the Grinches and Collect Hanukkah Donuts! 🎄🍩🕎
 
 This repository contains the source code for a fun 2D collectible game built with Unity. Below, you’ll find instructions on how to run the game, a description of class relationships, assumptions, and architectural choices, as well as UML diagrams illustrating the game’s structure.
+
+### 🎮 Play the Game on Itch.io 
+You can play the game directly from our [Itch.io page](https://twobitcode.itch.io/collectavoid).
 
 ## 🕹️ How to Run the Game
 
@@ -16,12 +19,6 @@ This repository contains the source code for a fun 2D collectible game built wit
 3. **Play the Game**:
    - Open the `Scene1` in the `Scenes` folder.
    - Press the "Play" button in Unity’s editor to run the game.
-
-4. **Build the Game** (Optional):
-   - Go to `File > Build Settings`.
-   - Select your target platform (e.g., Windows, macOS, WebGL).
-   - Click `Build` and run the resulting executable.
-
 ---
 
 ## 🏗️ Class Relationships
@@ -42,7 +39,9 @@ This repository contains the source code for a fun 2D collectible game built wit
 ### 🍩 Collectible Classes
 
 - **`RareCollectible`**:
-  - Provides bonus points to the player and features a ticking visual effect before disappearing.
+  - Provides bonus points to the player.
+  - Features a **pulsating visual effect**, dynamically growing and shrinking during the last moments before disappearing.
+  - The pulsating effect emphasizes urgency, encouraging the player to collect it quickly.
 
 - **`TimedCollectible`**:
   - Moves in a circular motion and disappears after a set lifetime.
@@ -137,3 +136,18 @@ graph TD
 
 ## 📝 Additional Notes
 - You can easily extend the game by creating new collectible or enemy types using the provided interfaces.
+- Here is the text you need for adding the attribution:
+
+---
+
+### 🎵 Sound Attribution
+
+- **CollectCoin.wav** by *bradwesson*  
+  [Link to Source](https://freesound.org/s/135936/)  
+  License: [Attribution NonCommercial 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+
+- **platform game ding 9.wav** by *Robinhood76*  
+  [Link to Source](https://freesound.org/s/672049/)  
+  License: [Attribution NonCommercial 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+
+--- 
