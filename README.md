@@ -16,12 +16,6 @@ This repository contains the source code for a fun 2D collectible game built wit
 3. **Play the Game**:
    - Open the `Scene1` in the `Scenes` folder.
    - Press the "Play" button in Unity’s editor to run the game.
-
-4. **Build the Game** (Optional):
-   - Go to `File > Build Settings`.
-   - Select your target platform (e.g., Windows, macOS, WebGL).
-   - Click `Build` and run the resulting executable.
-
 ---
 
 ## 🏗️ Class Relationships
