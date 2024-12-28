@@ -1,4 +1,4 @@
-# Collect And Evoid- Escape the Grinches and Collect Hanukkah Donuts! 🎮🍩
+# Collect And Evoid- Escape the Grinches and Collect Hanukkah Donuts! 🎮🍩🕎
 
 This repository contains the source code for a fun 2D collectible game built with Unity. Below, you’ll find instructions on how to run the game, a description of class relationships, assumptions, and architectural choices, as well as UML diagrams illustrating the game’s structure.
 
