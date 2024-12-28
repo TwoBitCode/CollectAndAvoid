@@ -137,3 +137,18 @@ graph TD
 
 ## 📝 Additional Notes
 - You can easily extend the game by creating new collectible or enemy types using the provided interfaces.
+- Here is the text you need for adding the attribution:
+
+---
+
+### 🎵 Sound Attribution
+
+- **CollectCoin.wav** by *bradwesson*  
+  [Link to Source](https://freesound.org/s/135936/)  
+  License: [Attribution NonCommercial 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+
+- **platform game ding 9.wav** by *Robinhood76*  
+  [Link to Source](https://freesound.org/s/672049/)  
+  License: [Attribution NonCommercial 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+
+--- 
