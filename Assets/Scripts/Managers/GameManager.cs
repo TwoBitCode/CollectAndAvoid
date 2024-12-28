@@ -2,49 +2,49 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public int score = 0; // Current score
-    public int lives = 3; // Player's lives
-    public int winScore = 100; // Score required to win the game
+    [Header("UI Managers")]
+    [SerializeField] private ScoreLivesManager scoreLivesManager; // Reference to UI manager for score and lives
+    [SerializeField] private GameOverWinManager gameOverWinManager; // Reference to UI manager for game-over and win screens
 
-    public delegate void OnGameDataChanged(int score, int lives); // Delegate for data change
-    public static event OnGameDataChanged GameDataChanged;
+    private int score = 0; // Current score, not exposed in the Inspector
+    private int lives; // Current number of lives
+    public int Lives => lives; // Read-only property to access the current lives
 
-    public delegate void OnGameOver(); // Delegate for Game Over
-    public static event OnGameOver GameOverEvent;
+    private bool isGameOver = false; // Tracks whether the game is over
 
-    public delegate void OnGameWin(); // Delegate for Game Win
-    public static event OnGameWin GameWinEvent;
+    private void Start()
+    {
+        // Initialize lives using Constants.MaxLives
+        lives = Constants.MaxLives;
 
-    private bool isGameOver = false;
-    private bool isGameWon = false;
-
+        // Update the UI with the initial score and lives
+        scoreLivesManager.UpdateUI(score, lives);
+    }
     public void AddScore(int points)
     {
-        if (isGameOver || isGameWon) return;
+        Debug.Log($"AddScore called with {points} points. Current score before adding: {score}");
+
+        if (isGameOver) return;
 
         score += points;
-        Debug.Log("Score: " + score);
+        scoreLivesManager.UpdateUI(score, lives);
 
-        // Check if the player has won
-        if (score >= winScore)
+        if (score >= Constants.MaxScore)
         {
-            TriggerGameWin();
+            TriggerWin();
         }
-
-        // Notify listeners about the change
-        GameDataChanged?.Invoke(score, lives);
     }
+
 
     public void LoseLife()
     {
-        if (isGameOver || isGameWon) return;
+        if (isGameOver) return;
 
+        // Decrement the number of lives
         lives--;
-        Debug.Log("Lives: " + lives);
+        scoreLivesManager.UpdateUI(score, lives);
 
-        // Notify listeners about the change
-        GameDataChanged?.Invoke(score, lives);
-
+        // Check if the player has lost all lives
         if (lives <= 0)
         {
             TriggerGameOver();
@@ -53,15 +53,24 @@ public class GameManager : MonoBehaviour
 
     private void TriggerGameOver()
     {
+        if (isGameOver) return;
+
+        // Mark the game as over and pause
         isGameOver = true;
         Debug.Log("Game Over!");
-        GameOverEvent?.Invoke(); // Notify listeners that the game is over
+        Time.timeScale = Constants.GamePausedTimeScale; // Use constant for pause
+        gameOverWinManager.ShowGameOverScreen();
     }
 
-    private void TriggerGameWin()
+    private void TriggerWin()
     {
-        isGameWon = true;
+        if (isGameOver) return;
+
+        // Mark the game as won and pause
+        isGameOver = true;
         Debug.Log("You Win!");
-        GameWinEvent?.Invoke(); // Notify listeners that the game is won
+        Time.timeScale = Constants.GamePausedTimeScale; // Use constant for pause
+        gameOverWinManager.ShowGameWinScreen();
     }
+
 }

@@ -2,20 +2,33 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    // Prefabs for enemies and collectibles
-    public GameObject patrolEnemyPrefab;
-    public GameObject chaseEnemyPrefab;
-    public GameObject[] collectiblePrefabs;
+    [Header("Spawn Settings")]
+    [SerializeField] private GameObject patrolEnemyPrefab; // Prefab for patrol enemies
+    [SerializeField] private GameObject chaseEnemyPrefab; // Prefab for chase enemies
+    [SerializeField] private GameObject[] collectiblePrefabs; // Array of collectible prefabs
 
-    // Spawn intervals
-    public float enemySpawnInterval = 5f; // Time interval for enemy spawns
-    public float collectibleSpawnInterval = 2f; // Time interval for collectible spawns
+    [SerializeField] private float enemySpawnInterval = 5f; // Time interval for enemy spawns
+    [SerializeField] private float collectibleSpawnInterval = 2f; // Time interval for collectible spawns
+    [SerializeField] private int maxCollectibles = 5; // Maximum number of collectibles in the scene
 
-    // Maximum number of collectibles allowed in the scene
-    public int maxCollectibles = 5;
+    [Header("Enemy Probability")]
+    [SerializeField, Range(0f, 1f)] private float patrolEnemyProbability = 0.5f; // Probability of spawning a patrol enemy
+
+    [Header("Spawn Area Settings")]
+    [SerializeField] private float spawnAreaWidth = 20f; // Total width of the spawn area
+    [SerializeField] private float spawnAreaHeight = 10f; // Total height of the spawn area
+    [SerializeField] private float marginX = 2f; // Horizontal margin from the edges
+    [SerializeField] private float marginY = 1f; // Vertical margin from the edges
+
+    private float halfSpawnAreaWidth; // Half of the spawn area width
+    private float halfSpawnAreaHeight; // Half of the spawn area height
 
     void Start()
     {
+        // Calculate half-dimensions for the spawn area
+        halfSpawnAreaWidth = spawnAreaWidth * 0.5f;
+        halfSpawnAreaHeight = spawnAreaHeight * 0.5f;
+
         // Start spawning enemies and collectibles
         InvokeRepeating(nameof(SpawnEnemy), 0, enemySpawnInterval);
         InvokeRepeating(nameof(SpawnCollectible), 0, collectibleSpawnInterval);
@@ -23,10 +36,10 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        // Randomly select an enemy type
-        GameObject enemyPrefab = Random.value > 0.5f ? patrolEnemyPrefab : chaseEnemyPrefab;
+        // Use the defined probability to select the enemy type
+        GameObject enemyPrefab = Random.value < patrolEnemyProbability ? patrolEnemyPrefab : chaseEnemyPrefab;
 
-        // Instantiate the enemy at a random position
+        // Instantiate the selected enemy at a random position
         Instantiate(enemyPrefab, GetRandomPosition(), Quaternion.identity);
     }
 
@@ -46,9 +59,9 @@ public class SpawnManager : MonoBehaviour
 
     Vector3 GetRandomPosition()
     {
-        // Generate a random position within bounds
-        float x = Random.Range(-10f, 10f);
-        float y = Random.Range(-5f, 5f);
+        // Calculate random position within the spawn area, accounting for margins
+        float x = Random.Range(-halfSpawnAreaWidth + marginX, halfSpawnAreaWidth - marginX);
+        float y = Random.Range(-halfSpawnAreaHeight + marginY, halfSpawnAreaHeight - marginY);
         return new Vector3(x, y, 0);
     }
 }

@@ -2,12 +2,23 @@ using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour, IEnemyBehavior
 {
-    public float speed = 2f; // Speed of patrol
-    public float patrolRangeX = 5f; // Horizontal patrol range
-    public LayerMask WallLayer; // Layer to detect walls
+    [SerializeField]
+    private float speed = 2f; // Speed of patrol
 
-    private Vector3 startPosition;
-    private bool movingRight = true;
+    [SerializeField]
+    private float patrolRangeX = 5f; // Horizontal patrol range
+
+    [SerializeField]
+    private LayerMask wallLayer; // Layer to detect walls
+
+    [SerializeField]
+    private float wallDetectionDistance = 0.5f; // Distance to detect walls
+
+    private const float RightDirection = 1f; // Constant for moving right
+    private const float LeftDirection = -1f; // Constant for moving left
+
+    private Vector3 startPosition; // Initial position of the enemy
+    private bool movingRight = true; // Direction of movement
 
     void Start()
     {
@@ -23,16 +34,17 @@ public class EnemyPatrol : MonoBehaviour, IEnemyBehavior
     {
         float targetX = movingRight ? startPosition.x + patrolRangeX : startPosition.x - patrolRangeX;
 
-        // Detect walls in the direction of movement
         if (IsWallAhead())
         {
             movingRight = !movingRight; // Switch direction if a wall is detected
         }
 
-        // Move the enemy horizontally
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, transform.position.y, transform.position.z), speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            new Vector3(targetX, transform.position.y, transform.position.z),
+            speed * Time.deltaTime
+        );
 
-        // Switch direction when the patrol range is reached
         if (Mathf.Abs(transform.position.x - targetX) < 0.01f)
         {
             movingRight = !movingRight;
@@ -41,12 +53,10 @@ public class EnemyPatrol : MonoBehaviour, IEnemyBehavior
 
     private bool IsWallAhead()
     {
-        float direction = movingRight ? 1f : -1f; // Direction of movement
-        Vector2 origin = transform.position;
-        float rayDistance = 0.5f; // Distance to check for walls
+        float direction = movingRight ? RightDirection : LeftDirection; // Horizontal direction of movement
+        Vector2 origin = transform.position; // Origin of the raycast
 
-        // Cast a ray to detect walls
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.right * direction, rayDistance, WallLayer);
-        return hit.collider != null; // Return true if a wall is detected
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.right * direction, wallDetectionDistance, wallLayer);
+        return hit.collider != null;
     }
 }

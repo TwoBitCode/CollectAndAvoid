@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8747480846882114892}
   - component: {fileID: 7899893851169814447}
   - component: {fileID: -8834878514911704955}
-  - component: {fileID: 6532013897554285734}
+  - component: {fileID: 2129310845624027100}
   m_Layer: 0
   m_Name: Collectibles 2
   m_TagString: Collectible
@@ -80,12 +80,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -8686507434265474672, guid: 5a5fa317d23982a40ad9ee3fe3f62078, type: 3}
+  m_Sprite: {fileID: 6301087983396510462, guid: 08a0c17f3fb1e7a47ac29c24a4a967f8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.19, y: 1.97}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9564441c2dd1fe4ba4a299107a27716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6532013897554285734
+--- !u!114 &2129310845624027100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,4 +178,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5cba19fe3d55404da2b5f696777f835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bonusPoints: 50
+  visibleDuration: 5
+  tickInterval: 1
